@@ -7,7 +7,7 @@
         }
 
         .animate-mesh {
-            background: linear-gradient(-45deg, #741a1a, #1e1b4b, #ac3636, #020617);
+            background: linear-gradient(-45deg, #1cb845, #07cc77, #d3bc0b, #020617);
             background-size: 400% 400%;
             animation: gradientFlow 10s ease infinite;
         }
@@ -33,7 +33,7 @@
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-2xl font-bold text-white tracking-tight">Text Manager</h1>
+                            <h1 class="text-2xl font-bold text-white tracking-tight">Post Management system</h1>
                             <p class="text-xs text-indigo-300 uppercase tracking-widest font-bold opacity-70">Demonstration purposes</p>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                 <div class="px-8 py-8">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-sm font-bold text-slate-300 flex items-center">
-                            <span>Saved Emails</span>
+                            <span>Saved Posts</span>
                         </h2>
                         <span class="px-2.5 py-1 text-[10px] font-black bg-indigo-500/20 text-indigo-300 rounded-lg border border-indigo-500/30 uppercase">
                             {{ count($posts) }} Total
@@ -86,27 +86,36 @@
                     <ul class="space-y-3">
                         @forelse ($posts as $post)
                             <li class="group flex items-center justify-between bg-white/5 hover:bg-white/10 px-4 py-4 rounded-2xl border border-white/5 transition-all duration-300">
-                                
-                                <div class="flex items-center space-x-3">
-                                    <div class="h-2 w-2 rounded-full bg-indigo-400 shadow-[0_0_10px_rgba(129,140,248,0.5)]"></div>
-                                    <span class="text-sm font-medium text-slate-200">
-                                        {{ $post->description }}
-                                    </span>
-                                </div>
+    
+    <div class="flex items-center space-x-3">
+        <div class="h-2 w-2 rounded-full bg-indigo-400 shadow-[0_0_10px_rgba(129,140,248,0.5)]"></div>
+        <span class="text-sm font-medium text-slate-200">
+            {{ $post->description }}
+        </span>
+    </div>
 
-                                <form method="POST" action="/formtest/{{ $post->id }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button 
-                                        type="submit"
-                                        class="opacity-0 group-hover:opacity-100 transition-all text-slate-400 hover:text-red-400 p-1 transform hover:scale-110"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                    </button>
-                                </form>
-                            </li>
+    <div class="flex items-center space-x-2">
+        
+        <a 
+            href="/posts/{{ $post->id }}/edit"
+            class="opacity-0 group-hover:opacity-100 transition-all text-slate-400 hover:text-blue-400 p-1 transform hover:scale-110"
+        >
+            ✏️
+        </a>
+
+        <form method="POST" action="/formtest/{{ $post->id }}">
+            @csrf
+            @method('DELETE')
+            <button 
+                type="submit"
+                class="opacity-0 group-hover:opacity-100 transition-all text-slate-400 hover:text-red-400 p-1 transform hover:scale-110"
+            >
+                🗑
+            </button>
+        </form>
+
+    </div>
+</li>
                         @empty
                             <div class="text-center py-12 rounded-2xl bg-white/5 border border-dashed border-white/10">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-600 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">

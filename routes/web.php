@@ -46,3 +46,39 @@ Route::get('/delete', function(){
 
     return redirect('/formtest');
 });
+
+
+//index
+Route::get('/posts', function(){
+    $posts = Post::all();
+
+    return view('posts.index', [
+        'posts' => $posts,
+    ]);
+});
+
+//show
+Route::get('/posts/{post}', function (Post $post) {
+    return view('posts.show', [
+        'post' => $post,
+    ]);
+});
+
+//edit
+Route::get('/posts/{post}/edit', function (Post $post) {
+    return view('posts.edit', [
+        'post' => $post,
+    ]);
+}
+);
+
+//update
+Route::patch('/posts/{post}', function (Post $post) {
+    $post->update([
+        'description' => request('description'),
+        'updated_at' => now(),
+    ]);
+
+    return redirect('/posts' . '/' . $post->id);
+}
+);
