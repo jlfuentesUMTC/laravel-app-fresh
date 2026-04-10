@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Models\Ideas;
-use App\Models\User;
 use App\Models\Post;
+use App\Http\Controllers\UserController;
+
 
 Route::view('/', 'welcome', [
     'greeting' => 'Hello, World!',
@@ -19,6 +20,35 @@ Route::view('/', 'welcome', [
 
 Route::view('/about', 'about');
 Route::view('/contact', 'contact');
+
+Route::get('/formtest', function(){
+    $posts = Post::all();
+
+    return view('formtest',[
+        'posts' => $posts,
+    ]);
+});
+
+Route::post('/formtest', function(){
+    Post::create([
+        'description' => request('description'),
+    ]);
+
+    return redirect('/formtest');
+});
+
+Route::delete('/formtest/{id}', function ($id) {
+    Post::findOrFail($id)->delete();
+
+    return redirect('/formtest');
+});
+
+Route::get('/delete', function(){
+    Post::truncate();  
+
+    return redirect('/formtest');
+});
+
 
 //index
 Route::get('/posts', function(){
@@ -56,67 +86,18 @@ Route::patch('/posts/{post}', function (Post $post) {
 );
 
 
+// DASHBOARD (default page)
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
 
+// STORE USER
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
+// EDIT FORM
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 
-//user registration routes
+// UPDATE USER
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
 
-Route::get('/register', function () {
-    $users = User::all(); 
-    return view('user_registration.index', [
-        'users' => $users
-    ]);
-});
-
-Route::get('/register/create', function () {
-    return view('user_registration.create');
-});
-
-Route::post('/register', function(User $user){
-    $user->create([
-        'first_name' => request('first_name'),
-        'last_name' => request('last_name'),
-        'middle_name' => request('middle_name'),
-        'nickname' => request('nickname'),
-        'age' => request('age'),
-        'address' => request('address'),
-        'contact_number' => request('contact_number'),
-        'email' => request('email'),
-        'password' => request('password'),
-    ]);
-
-    return redirect('/register');
-}
-);
-
-Route::get('/register/show/{user}', function(User $user){
-    return view('user_registration.show', [
-        'user' => $user,
-    ]);
-}
-);
-
-Route::patch('/register/update/{user}', function(User $user){
-    $user->update([
-        'first_name' => request('first_name'),
-        'last_name' => request('last_name'),
-        'middle_name' => request('middle_name'),
-        'nickname' => request('nickname'),
-        'age' => request('age'),
-        'address' => request('address'),
-        'contact_number' => request('contact_number'),
-        'email' => request('email'),
-        'password' => request('password'),
-    ]);
-
-    return redirect('/register');
-}
-);
-
-Route::delete('/register/delete/{user}', function (User $user) {
-    $user->delete();
-
-    return redirect('/register');
-    
-});
+// DELETE USER
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
