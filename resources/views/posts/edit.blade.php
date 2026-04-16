@@ -1,40 +1,35 @@
-<x-layout>
+<x-layout title="Edit Post">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .animate-mesh {
-            background: linear-gradient(-45deg, #1cb845, #07cc77, #d3bc0b, #020617);
-            background-size: 400% 400%;
-            animation: gradientFlow 10s ease infinite;
-        }
-
-        .glass-card {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .font-nexus { font-family: 'Orbitron', sans-serif; }
+        .nexus-gradient { background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0a0c12 100%); }
+        
+        /* Custom glow for the glass card to match the theme */
+        .nexus-glass {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
         }
     </style>
 
-    <div class="min-h-screen animate-mesh py-12 px-4 sm:px-6 lg:px-8 font-sans antialiased flex items-center">
+    <div class="nexus-gradient font-nexus min-h-screen py-12 px-4 sm:px-6 lg:px-8 flex items-center antialiased">
         <div class="max-w-xl mx-auto w-full">
             
-            <div class="glass-card rounded-3xl shadow-2xl overflow-hidden">
+            <div class="nexus-glass rounded-3xl overflow-hidden">
                 
-                <div class="px-8 pt-8 pb-6 bg-gradient-to-b from-white/5 to-transparent">
+                <div class="px-8 pt-8 pb-6 bg-gradient-to-b from-cyan-500/10 to-transparent">
                     <div class="flex items-center space-x-4">
-                        <div class="p-3 bg-indigo-500/20 rounded-2xl ring-1 ring-indigo-400/30">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        <div class="p-3 bg-cyan-500/20 rounded-2xl ring-1 ring-cyan-400/30">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-2xl font-bold text-white tracking-tight">Posts Manager</h1>
-                            <p class="text-xs text-indigo-300 uppercase tracking-widest font-bold opacity-70">Demonstration purposes</p>
+                            <h1 class="text-2xl font-bold text-cyan-400 tracking-wider">POST_EDITOR</h1>
+                            <p class="text-[10px] text-cyan-500/60 uppercase tracking-[0.2em] font-bold">Modifying_Record_ID: {{ $post->id }}</p>
                         </div>
                     </div>
                 </div>
@@ -45,33 +40,49 @@
                         @method('PATCH')
                         
                         <div class="relative group">
-                            <label for="description" class="block text-xs font-semibold text-slate-400 mb-2 ml-1 uppercase tracking-wider">
-                                Post
+                            <label for="description" class="block text-[10px] font-bold text-cyan-500/50 mb-3 ml-1 uppercase tracking-widest">
+                                Data_Content
                             </label>
                             <textarea 
                                 id="description"
-                                type="text"
                                 name="description"
                                 required
-                                placeholder="Enter your post here..."
-                                class="w-full rounded-xl bg-slate-950/50 border border-slate-700/50 text-white px-4 py-3.5 text-sm transition-all
-                                       placeholder:text-slate-600
-                                       focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 focus:outline-none"
+                                rows="5"
+                                placeholder="Enter system broadcast..."
+                                class="w-full rounded-xl bg-black/40 border border-cyan-500/30 text-cyan-100 px-4 py-3.5 text-sm transition-all
+                                       placeholder:text-cyan-900
+                                       focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/10 focus:outline-none"
                             >{{ $post->description }}</textarea>
                         </div>
 
-                        <div class="mt-4 flex justify-end">
+                        <div class="mt-8 flex flex-col sm:flex-row gap-4">
                             <button 
                                 type="submit"
-                                class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition-all px-8 py-3 rounded-xl text-sm font-bold text-white shadow-lg shadow-indigo-500/20"
+                                class="flex-1 bg-cyan-500 hover:bg-cyan-400 active:scale-95 transition-all py-3 rounded-xl text-xs font-bold text-black uppercase tracking-widest shadow-lg shadow-cyan-500/20"
                             >
-                                Update Post
+                                Update_Archive
                             </button>
+                            
+                            <a 
+                                href="/posts"
+                                class="px-8 py-3 rounded-xl text-xs font-bold text-rose-500 border border-rose-500/30 hover:bg-rose-500/10 hover:border-rose-500 transition-all text-center uppercase tracking-widest"
+                            >
+                                Abort
+                            </a>
                         </div>
                     </form>
                 </div>
 
+                <div class="px-8 py-4 bg-cyan-500/5 border-t border-cyan-500/10 flex justify-between items-center">
+                    <span class="text-[8px] text-cyan-900 tracking-tighter uppercase">Nexus_Encryption_Active</span>
+                    <div class="flex space-x-1">
+                        <div class="w-1.5 h-1.5 rounded-full bg-cyan-500/20 animate-pulse"></div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-cyan-500/40 animate-pulse delay-75"></div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-cyan-500/60 animate-pulse delay-150"></div>
+                    </div>
+                </div>
                 
+            </div>
         </div>
     </div>
 </x-layout>

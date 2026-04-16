@@ -38,8 +38,10 @@
         <a href="/contact">Contact</a> |
         <a href="/formtest">Form Test</a> |
         <a href="/posts">Posts</a> |
-        <a href="{{ route('users.index') }}">User Registration</a>
+        <a href="{{ route('users.index') }}">User Registration</a> |
+        <a href="/books" class="px-3 py-2 hover:bg-gray-200 transition-colors duration-200">Books</a>
     </nav>
+    <main class="min-h-[calc(100vh-60px)]">
 
     {{ $slot }}
 

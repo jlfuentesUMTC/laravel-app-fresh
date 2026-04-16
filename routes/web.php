@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Ideas;
 use App\Models\Post;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookController;
 
 
 Route::view('/', 'welcome', [
@@ -101,3 +102,6 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 
 // DELETE USER
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+Route::delete('/register/delete/{user}', [UserController::class, 'destroy']);
+Route::resource('books', BookController::class);
